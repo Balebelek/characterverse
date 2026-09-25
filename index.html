@@ -1,649 +1,1456 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
-
-  <title>CharacterVerse</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: #090b10;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-    }
-
-    button,
-    input,
-    textarea {
-      font-family: Arial, sans-serif;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    /* HEADER */
-
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: #090b10;
-      border-bottom: 1px solid #222631;
-      padding: 18px;
-    }
-
-    .logo {
-      font-size: 23px;
-      font-weight: 700;
-    }
-
-    .subtitle {
-      color: #858c9d;
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    /* PAGES */
-
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 18px;
-      padding-bottom: 100px;
-    }
-
-    /* SEARCH */
-
-    .search {
-      width: 100%;
-      padding: 15px;
-      border-radius: 13px;
-      border: 1px solid #292e39;
-      background: #141720;
-      color: #ffffff;
-      outline: none;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    .search::placeholder {
-      color: #707789;
-    }
-
-    /* SECTION */
-
-    .section {
-      margin-bottom: 28px;
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 13px;
-    }
-
-    /* CHARACTER CARD */
-
-    .character-card {
-      background: #141720;
-      border: 1px solid #252a35;
-      border-radius: 17px;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
-
-    .character-top {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-
-    .avatar {
-      width: 56px;
-      height: 56px;
-      min-width: 56px;
-      border-radius: 14px;
-      background: #252b38;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 25px;
-    }
-
-    .character-name {
-      font-size: 17px;
-      font-weight: 700;
-    }
-
-    .creator {
-      color: #777f91;
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .description {
-      color: #a3a9b8;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-top: 12px;
-    }
-
-    .tags {
-      margin-top: 12px;
-    }
-
-    .tag {
-      display: inline-block;
-      background: #222732;
-      color: #a5adbd;
-      padding: 5px 8px;
-      border-radius: 7px;
-      font-size: 11px;
-      margin-right: 5px;
-      margin-bottom: 4px;
-    }
-
-    /* FORM */
-
-    .back-button {
-      background: transparent;
-      border: none;
-      color: #aab1c1;
-      font-size: 14px;
-      padding: 0;
-      margin-bottom: 22px;
-    }
-
-    .form-title {
-      font-size: 25px;
-      font-weight: 700;
-      margin-bottom: 7px;
-    }
-
-    .form-description {
-      color: #858c9d;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 25px;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .form-input,
-    .form-textarea {
-      width: 100%;
-      background: #141720;
-      color: #ffffff;
-      border: 1px solid #292e39;
-      border-radius: 12px;
-      outline: none;
-      font-size: 14px;
-      padding: 14px;
-    }
-
-    .form-input:focus,
-    .form-textarea:focus {
-      border-color: #5b6475;
-    }
-
-    .form-textarea {
-      min-height: 110px;
-      resize: vertical;
-      line-height: 1.5;
-    }
-
-    .create-button {
-      width: 100%;
-      background: #ffffff;
-      color: #090b10;
-      border: none;
-      border-radius: 13px;
-      padding: 15px;
-      font-size: 14px;
-      font-weight: 700;
-      margin-top: 5px;
-    }
-
-    .create-button:active {
-      transform: scale(0.98);
-    }
-
-    /* PROFILE */
-
-    .profile-card {
-      background: #141720;
-      border: 1px solid #252a35;
-      border-radius: 17px;
-      padding: 25px;
-      text-align: center;
-    }
-
-    .profile-avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: #272d39;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      margin: 0 auto 12px;
-    }
-
-    .profile-name {
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .profile-description {
-      color: #858c9d;
-      font-size: 13px;
-      margin-top: 5px;
-    }
-
-    /* EMPTY */
-
-    .empty {
-      text-align: center;
-      color: #747c8d;
-      font-size: 13px;
-      padding: 35px 10px;
-    }
-
-    /* BOTTOM NAV */
-
-    .bottom-nav {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 67px;
-      background: #101219;
-      border-top: 1px solid #252a35;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 100;
-    }
-
-    .nav-button {
-      background: transparent;
-      border: none;
-      color: #747c8d;
-      font-size: 11px;
-      text-align: center;
-      min-width: 65px;
-    }
-
-    .nav-button.active {
-      color: #ffffff;
-    }
-
-    .nav-icon {
-      font-size: 19px;
-      margin-bottom: 3px;
-    }
-
-    /* MODAL */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      display: none;
-      align-items: flex-end;
-      z-index: 200;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-box {
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      background: #141720;
-      border-top-left-radius: 22px;
-      border-top-right-radius: 22px;
-      padding: 22px;
-      border-top: 1px solid #2a2f3a;
-    }
-
-    .modal-close {
-      float: right;
-      background: #252b36;
-      border: none;
-      color: white;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-    }
-
-    .modal-avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 18px;
-      background: #252b38;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      margin-bottom: 14px;
-    }
-
-    .modal-name {
-      font-size: 23px;
-      font-weight: 700;
-    }
-
-    .modal-creator {
-      color: #7f8798;
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .modal-section {
-      margin-top: 20px;
-    }
-
-    .modal-label {
-      color: #858c9d;
-      font-size: 12px;
-      margin-bottom: 7px;
-    }
-
-    .modal-text {
-      color: #d5d9e1;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .chat-button {
-      width: 100%;
-      margin-top: 22px;
-      border: none;
-      background: white;
-      color: black;
-      border-radius: 13px;
-      padding: 15px;
-      font-weight: 700;
-    }
-
-    .favorite-button {
-      width: 100%;
-      margin-top: 10px;
-      border: 1px solid #303642;
-      background: #1b1f29;
-      color: white;
-      border-radius: 13px;
-      padding: 14px;
-      font-weight: 600;
-    }
-
-  </style>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>CharacterVerse</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #0b0b0f;
+  color: #ffffff;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================
+   APP
+========================= */
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 90px;
+}
+
+.page {
+  display: none;
+  padding: 20px 16px 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page.active {
+  display: block;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logo span {
+  color: #8b5cf6;
+}
+
+.header-button {
+  border: 0;
+  background: #18181f;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  font-size: 18px;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box {
+  width: 100%;
+  background: #17171e;
+  border: 1px solid #262630;
+  border-radius: 15px;
+  padding: 14px 16px;
+  color: white;
+  outline: none;
+  margin-bottom: 22px;
+}
+
+.search-box:focus {
+  border-color: #8b5cf6;
+}
+
+.search-box::placeholder {
+  color: #777783;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 22px 0 12px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 750;
+}
+
+.section-link {
+  color: #9b7cff;
+  font-size: 13px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  background:
+    linear-gradient(
+      135deg,
+      #24134d,
+      #151522 60%,
+      #0d0d12
+    );
+
+  border: 1px solid #33235a;
+  border-radius: 22px;
+  padding: 22px;
+  margin-bottom: 25px;
+}
+
+.hero h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.hero p {
+  color: #b8b8c4;
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+
+.primary-button {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  background: #8b5cf6;
+  color: white;
+  font-weight: 750;
+  font-size: 15px;
+}
+
+.primary-button:active {
+  transform: scale(.98);
+}
+
+/* =========================
+   CATEGORY
+========================= */
+
+.category-row {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+  scrollbar-width: none;
+}
+
+.category-row::-webkit-scrollbar {
+  display: none;
+}
+
+.category {
+  flex: 0 0 auto;
+  border: 1px solid #292933;
+  background: #15151b;
+  color: #c9c9d2;
+  padding: 9px 13px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.category.active {
+  background: #8b5cf6;
+  color: white;
+  border-color: #8b5cf6;
+}
+
+/* =========================
+   CHARACTER GRID
+========================= */
+
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.character-card {
+  background: #15151b;
+  border: 1px solid #24242d;
+  border-radius: 17px;
+  overflow: hidden;
+  min-width: 0;
+  transition: .15s;
+}
+
+.character-card:active {
+  transform: scale(.98);
+}
+
+.character-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #202028;
+  display: block;
+}
+
+.character-content {
+  padding: 12px;
+}
+
+.character-name {
+  font-weight: 750;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.character-creator {
+  color: #777783;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.character-description {
+  color: #a5a5b0;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tags {
+  display: flex;
+  gap: 5px;
+  overflow: hidden;
+  margin-top: 9px;
+}
+
+.tag {
+  background: #22222b;
+  color: #aaaab5;
+  border-radius: 6px;
+  padding: 4px 7px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.card-actions {
+  display: flex;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.small-button {
+  flex: 1;
+  border: 0;
+  border-radius: 9px;
+  padding: 8px;
+  background: #22222b;
+  color: #ddd;
+  font-size: 11px;
+}
+
+.small-button.primary {
+  background: #8b5cf6;
+  color: white;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.form-subtitle {
+  color: #858591;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.form-hint {
+  color: #777783;
+  font-size: 11px;
+  margin-top: 5px;
+  line-height: 1.4;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  border: 1px solid #292933;
+  background: #15151b;
+  color: white;
+  border-radius: 13px;
+  padding: 13px 14px;
+  outline: none;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: #8b5cf6;
+}
+
+.textarea {
+  min-height: 125px;
+  resize: vertical;
+}
+
+.avatar-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 18px;
+  object-fit: cover;
+  background: #202028;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-divider {
+  height: 1px;
+  background: #25252e;
+  margin: 25px 0;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #15151b;
+  padding: 13px;
+  border-radius: 13px;
+}
+
+.checkbox-row input {
+  width: 18px;
+  height: 18px;
+}
+
+/* =========================
+   CHARACTER DETAIL
+========================= */
+
+.detail-cover {
+  text-align: center;
+}
+
+.detail-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 25px;
+  object-fit: cover;
+  background: #202028;
+}
+
+.detail-name {
+  font-size: 27px;
+  font-weight: 800;
+  margin-top: 14px;
+}
+
+.detail-creator {
+  color: #777783;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 9px;
+  margin: 20px 0;
+}
+
+.detail-actions button {
+  flex: 1;
+}
+
+.info-box {
+  background: #15151b;
+  border: 1px solid #24242d;
+  border-radius: 16px;
+  padding: 15px;
+  margin-bottom: 13px;
+}
+
+.info-title {
+  font-size: 13px;
+  font-weight: 750;
+  margin-bottom: 8px;
+  color: #c8c8d2;
+}
+
+.info-text {
+  white-space: pre-wrap;
+  color: #9d9da8;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* =========================
+   CHAT
+========================= */
+
+.chat-page {
+  padding: 0 !important;
+  max-width: none !important;
+  min-height: calc(100vh - 90px);
+}
+
+.chat-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #0b0b0f;
+  border-bottom: 1px solid #22222b;
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.chat-character-name {
+  font-weight: 750;
+}
+
+.chat-character-status {
+  font-size: 11px;
+  color: #777783;
+}
+
+.chat-messages {
+  padding: 20px 15px 120px;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 82%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  line-height: 1.55;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.message.character .message-bubble {
+  background: #18181f;
+  border: 1px solid #25252f;
+}
+
+.message.user .message-bubble {
+  background: #8b5cf6;
+}
+
+.chat-input-area {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0e0e13;
+  border-top: 1px solid #24242d;
+  padding: 10px;
+  z-index: 20;
+}
+
+.chat-input-inner {
+  max-width: 850px;
+  margin: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input {
+  flex: 1;
+  border: 1px solid #292933;
+  background: #18181f;
+  color: white;
+  border-radius: 13px;
+  padding: 12px;
+  outline: none;
+  resize: none;
+  min-height: 45px;
+  max-height: 120px;
+}
+
+.send-button {
+  width: 48px;
+  border: 0;
+  border-radius: 13px;
+  background: #8b5cf6;
+  color: white;
+  font-size: 18px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-card {
+  text-align: center;
+  background: #15151b;
+  border: 1px solid #24242d;
+  border-radius: 20px;
+  padding: 25px;
+}
+
+.profile-avatar {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #25252e;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: 12px;
+}
+
+.profile-username {
+  color: #777783;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 22px;
+}
+
+.stat-number {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.stat-label {
+  color: #777783;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty {
+  text-align: center;
+  padding: 45px 20px;
+  color: #777783;
+}
+
+.empty-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(14,14,19,.96);
+  border-top: 1px solid #25252e;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 50;
+  backdrop-filter: blur(15px);
+}
+
+.nav-button {
+  background: transparent;
+  border: 0;
+  color: #686874;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  min-width: 60px;
+}
+
+.nav-icon {
+  font-size: 20px;
+}
+
+.nav-button.active {
+  color: #a47cff;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 85px;
+  transform: translateX(-50%) translateY(20px);
+  background: #24242c;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .2s;
+  z-index: 100;
+  max-width: 90%;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width: 700px) {
+
+  .character-grid {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+  }
+
+  .page {
+    padding-top: 30px;
+  }
+
+  .bottom-nav {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(700px, 100%);
+    border-radius: 20px 20px 0 0;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
-<!-- HEADER -->
+<div id="app">
 
-<header class="header">
+<!-- ======================================
+     DISCOVER
+======================================= -->
 
-  <div class="logo">
-    CharacterVerse
-  </div>
+<section id="page-discover" class="page active">
 
-  <div class="subtitle">
-    Your world. Your characters.
-  </div>
-
-</header>
-
-
-<!-- ========================= -->
-<!-- DISCOVER PAGE -->
-<!-- ========================= -->
-
-<section id="discoverPage" class="page active">
-
-  <div class="container">
-
-    <input
-      id="searchInput"
-      class="search"
-      type="text"
-      placeholder="Search characters..."
-    >
-
-    <div class="section">
-
-      <div class="section-title">
-        Discover Characters
-      </div>
-
-      <div id="characterList"></div>
-
+  <div class="header">
+    <div class="logo">
+      Character<span>Verse</span>
     </div>
 
+    <button
+      class="header-button"
+      onclick="openProfile()"
+    >
+      👤
+    </button>
   </div>
+
+  <input
+    id="searchInput"
+    class="search-box"
+    type="text"
+    placeholder="Search characters..."
+    oninput="searchCharacters()"
+  >
+
+  <div class="hero">
+
+    <h1>Meet your next character.</h1>
+
+    <p>
+      Discover AI characters, create your own,
+      and start immersive conversations.
+    </p>
+
+    <button
+      class="primary-button"
+      onclick="openCreate()"
+    >
+      ✨ Create Character
+    </button>
+
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Explore</div>
+  </div>
+
+  <div class="category-row">
+
+    <button
+      class="category active"
+      onclick="filterCategory('all', this)"
+    >
+      All
+    </button>
+
+    <button
+      class="category"
+      onclick="filterCategory('romance', this)"
+    >
+      ❤️ Romance
+    </button>
+
+    <button
+      class="category"
+      onclick="filterCategory('fantasy', this)"
+    >
+      🧙 Fantasy
+    </button>
+
+    <button
+      class="category"
+      onclick="filterCategory('anime', this)"
+    >
+      🌸 Anime
+    </button>
+
+    <button
+      class="category"
+      onclick="filterCategory('school', this)"
+    >
+      🎓 School
+    </button>
+
+    <button
+      class="category"
+      onclick="filterCategory('roleplay', this)"
+    >
+      🎭 Roleplay
+    </button>
+
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Trending Characters</div>
+  </div>
+
+  <div
+    id="characterGrid"
+    class="character-grid"
+  ></div>
 
 </section>
 
 
-<!-- ========================= -->
-<!-- CREATE PAGE -->
-<!-- ========================= -->
+<!-- ======================================
+     CREATE
+======================================= -->
 
-<section id="createPage" class="page">
+<section id="page-create" class="page">
 
-  <div class="container">
+  <div class="header">
 
     <button
-      class="back-button"
+      class="header-button"
       onclick="showPage('discover')"
     >
-      ← Back
+      ←
     </button>
 
-    <div class="form-title">
+    <div class="logo">
       Create Character
     </div>
 
-    <div class="form-description">
-      Create your own character and define their personality,
-      story and first message.
-    </div>
-
-
-    <div class="form-group">
-
-      <label class="form-label">
-        Character Name *
-      </label>
-
-      <input
-        id="characterName"
-        class="form-input"
-        type="text"
-        placeholder="Aisyah"
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label class="form-label">
-        Creator
-      </label>
-
-      <input
-        id="characterCreator"
-        class="form-input"
-        type="text"
-        placeholder="@username"
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label class="form-label">
-        Description *
-      </label>
-
-      <textarea
-        id="characterDescription"
-        class="form-textarea"
-        placeholder="Describe your character..."
-      ></textarea>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label class="form-label">
-        Personality
-      </label>
-
-      <textarea
-        id="characterPersonality"
-        class="form-textarea"
-        placeholder="Calm, caring, funny, mysterious..."
-      ></textarea>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label class="form-label">
-        First Message
-      </label>
-
-      <textarea
-        id="characterGreeting"
-        class="form-textarea"
-        placeholder="Hello... I've been waiting for you."
-      ></textarea>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label class="form-label">
-        Tags
-      </label>
-
-      <input
-        id="characterTags"
-        class="form-input"
-        type="text"
-        placeholder="romance, drama, friendly"
-      >
-
-    </div>
-
-
-    <button
-      type="button"
-      class="create-button"
-      onclick="createCharacter()"
-    >
-      Create Character
-    </button>
+    <div style="width:40px"></div>
 
   </div>
+
+  <div class="form-title">
+    Build your character
+  </div>
+
+  <div class="form-subtitle">
+    Give your character a personality, world,
+    scenario and voice.
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Character Name *
+    </label>
+
+    <input
+      id="characterName"
+      class="input"
+      type="text"
+      maxlength="60"
+      placeholder="e.g. Aisyah Humaira"
+    >
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Avatar URL
+    </label>
+
+    <input
+      id="characterAvatar"
+      class="input"
+      type="url"
+      placeholder="https://..."
+      oninput="previewAvatar()"
+    >
+
+    <div class="form-hint">
+      Masukkan URL gambar publik.
+    </div>
+
+    <img
+      id="avatarPreview"
+      class="avatar-preview"
+      src="https://placehold.co/200x200/202028/ffffff?text=Avatar"
+      alt="Avatar preview"
+    >
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Short Description *
+    </label>
+
+    <textarea
+      id="characterDescription"
+      class="textarea"
+      maxlength="500"
+      placeholder="Describe your character in a few sentences..."
+    ></textarea>
+
+  </div>
+
+
+  <div class="form-divider"></div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Personality *
+    </label>
+
+    <textarea
+      id="characterPersonality"
+      class="textarea"
+      placeholder="Personality, behavior, values, flaws, habits, speaking style..."
+    ></textarea>
+
+    <div class="form-hint">
+      Contoh: calm, caring, sarcastic, protective,
+      speaks casually, becomes shy around people she trusts.
+    </div>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Appearance
+    </label>
+
+    <textarea
+      id="characterAppearance"
+      class="textarea"
+      placeholder="Age, appearance, clothes, hair, eyes, physical details..."
+    ></textarea>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Background / Lore
+    </label>
+
+    <textarea
+      id="characterBackground"
+      class="textarea"
+      placeholder="History, family, occupation, important events..."
+    ></textarea>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Scenario *
+    </label>
+
+    <textarea
+      id="characterScenario"
+      class="textarea"
+      placeholder="Where are you? What happened? What is the relationship between the user and character?"
+    ></textarea>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Greeting / First Message *
+    </label>
+
+    <textarea
+      id="characterGreeting"
+      class="textarea"
+      placeholder="The first message the character sends when a new chat begins..."
+    ></textarea>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Example Dialogue
+    </label>
+
+    <textarea
+      id="characterExamples"
+      class="textarea"
+      placeholder="{{user}}: Hey, are you okay?
+
+{{char}}: I'm fine. Stop looking at me like that..."
+    ></textarea>
+
+    <div class="form-hint">
+      Example dialogue membantu AI memahami gaya bicara karakter.
+    </div>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Tags
+    </label>
+
+    <input
+      id="characterTags"
+      class="input"
+      type="text"
+      placeholder="romance, school, shy, female"
+    >
+
+    <div class="form-hint">
+      Pisahkan dengan koma.
+    </div>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="form-label">
+      Visibility
+    </label>
+
+    <select
+      id="characterVisibility"
+      class="select"
+    >
+
+      <option value="public">
+        Public — everyone can discover
+      </option>
+
+      <option value="private">
+        Private — only you
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div class="form-group">
+
+    <label class="checkbox-row">
+
+      <input
+        id="characterNSFW"
+        type="checkbox"
+      >
+
+      <span>
+        Mark as mature / sensitive
+      </span>
+
+    </label>
+
+  </div>
+
+
+  <button
+    class="primary-button"
+    type="button"
+    onclick="createCharacter()"
+  >
+    Create Character
+  </button>
 
 </section>
 
 
-<!-- ========================= -->
-<!-- FAVORITES PAGE -->
-<!-- ========================= -->
+<!-- ======================================
+     FAVORITES
+======================================= -->
 
-<section id="favoritesPage" class="page">
+<section id="page-favorites" class="page">
 
-  <div class="container">
+  <div class="header">
 
-    <div class="form-title">
+    <div class="logo">
       Favorites
     </div>
 
-    <div class="form-description">
-      Your favorite characters.
-    </div>
-
-    <div id="favoriteList"></div>
-
   </div>
+
+  <div
+    id="favoritesGrid"
+    class="character-grid"
+  ></div>
 
 </section>
 
 
-<!-- ========================= -->
-<!-- PROFILE PAGE -->
-<!-- ========================= -->
+<!-- ======================================
+     PROFILE
+======================================= -->
 
-<section id="profilePage" class="page">
+<section id="page-profile" class="page">
 
-  <div class="container">
+  <div class="header">
 
-    <div class="form-title">
+    <div class="logo">
       Profile
     </div>
 
-    <div class="form-description">
-      Your CharacterVerse profile.
+  </div>
+
+  <div class="profile-card">
+
+    <img
+      id="profileAvatar"
+      class="profile-avatar"
+      src="https://placehold.co/200x200/202028/ffffff?text=U"
+      alt="Profile"
+    >
+
+    <div
+      id="profileName"
+      class="profile-name"
+    >
+      Telegram User
     </div>
 
-    <div class="profile-card">
+    <div
+      id="profileUsername"
+      class="profile-username"
+    >
+      @user
+    </div>
 
-      <div class="profile-avatar">
-        👤
+
+    <div class="stats">
+
+      <div>
+        <div
+          id="createdCount"
+          class="stat-number"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Characters
+        </div>
       </div>
 
-      <div class="profile-name">
-        Guest User
+
+      <div>
+        <div
+          id="favoriteCount"
+          class="stat-number"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Favorites
+        </div>
       </div>
 
-      <div class="profile-description">
-        CharacterVerse member
+
+      <div>
+        <div
+          id="chatCount"
+          class="stat-number"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Chats
+        </div>
       </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="section-header">
+
+    <div class="section-title">
+      My Characters
+    </div>
+
+  </div>
+
+  <div
+    id="myCharactersGrid"
+    class="character-grid"
+  ></div>
+
+</section>
+
+
+<!-- ======================================
+     CHARACTER DETAIL
+======================================= -->
+
+<section id="page-detail" class="page">
+
+  <div class="header">
+
+    <button
+      class="header-button"
+      onclick="showPage('discover')"
+    >
+      ←
+    </button>
+
+    <div class="logo">
+      Character
+    </div>
+
+    <div style="width:40px"></div>
+
+  </div>
+
+
+  <div class="detail-cover">
+
+    <img
+      id="detailAvatar"
+      class="detail-avatar"
+      src=""
+      alt="Character"
+    >
+
+    <div
+      id="detailName"
+      class="detail-name"
+    ></div>
+
+    <div
+      id="detailCreator"
+      class="detail-creator"
+    ></div>
+
+  </div>
+
+
+  <div class="detail-actions">
+
+    <button
+      id="detailFavoriteButton"
+      class="primary-button"
+      onclick="toggleCurrentFavorite()"
+    >
+      ♡ Favorite
+    </button>
+
+    <button
+      class="primary-button"
+      onclick="startCurrentChat()"
+    >
+      💬 Chat
+    </button>
+
+  </div>
+
+
+  <div class="info-box">
+
+    <div class="info-title">
+      Description
+    </div>
+
+    <div
+      id="detailDescription"
+      class="info-text"
+    ></div>
+
+  </div>
+
+
+  <div class="info-box">
+
+    <div class="info-title">
+      Personality
+    </div>
+
+    <div
+      id="detailPersonality"
+      class="info-text"
+    ></div>
+
+  </div>
+
+
+  <div class="info-box">
+
+    <div class="info-title">
+      Appearance
+    </div>
+
+    <div
+      id="detailAppearance"
+      class="info-text"
+    ></div>
+
+  </div>
+
+
+  <div class="info-box">
+
+    <div class="info-title">
+      Scenario
+    </div>
+
+    <div
+      id="detailScenario"
+      class="info-text"
+    ></div>
+
+  </div>
+
+
+  <div class="info-box">
+
+    <div class="info-title">
+      Tags
+    </div>
+
+    <div
+      id="detailTags"
+      class="tags"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- ======================================
+     CHAT
+======================================= -->
+
+<section
+  id="page-chat"
+  class="page chat-page"
+>
+
+  <div class="chat-header">
+
+    <button
+      class="header-button"
+      onclick="closeChat()"
+    >
+      ←
+    </button>
+
+    <img
+      id="chatAvatar"
+      class="chat-avatar"
+      src=""
+      alt=""
+    >
+
+    <div>
+
+      <div
+        id="chatCharacterName"
+        class="chat-character-name"
+      ></div>
+
+      <div class="chat-character-status">
+        CharacterVerse
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="chatMessages"
+    class="chat-messages"
+  ></div>
+
+
+  <div class="chat-input-area">
+
+    <div class="chat-input-inner">
+
+      <textarea
+        id="chatInput"
+        class="chat-input"
+        placeholder="Message..."
+        rows="1"
+        onkeydown="handleChatKey(event)"
+      ></textarea>
+
+      <button
+        class="send-button"
+        onclick="sendMessage()"
+      >
+        ➤
+      </button>
 
     </div>
 
@@ -652,318 +1459,368 @@
 </section>
 
 
-<!-- ========================= -->
-<!-- CHARACTER MODAL -->
-<!-- ========================= -->
+<!-- ======================================
+     BOTTOM NAV
+======================================= -->
 
-<div
-  id="characterModal"
-  class="modal"
-  onclick="closeModal(event)"
+<nav
+  id="bottomNav"
+  class="bottom-nav"
 >
 
-  <div
-    class="modal-box"
-    onclick="event.stopPropagation()"
-  >
-
-    <button
-      class="modal-close"
-      onclick="closeCharacterModal()"
-    >
-      ×
-    </button>
-
-    <div
-      id="modalAvatar"
-      class="modal-avatar"
-    >
-      ✨
-    </div>
-
-    <div
-      id="modalName"
-      class="modal-name"
-    >
-      Character
-    </div>
-
-    <div
-      id="modalCreator"
-      class="modal-creator"
-    >
-      @creator
-    </div>
-
-
-    <div class="modal-section">
-
-      <div class="modal-label">
-        DESCRIPTION
-      </div>
-
-      <div
-        id="modalDescription"
-        class="modal-text"
-      ></div>
-
-    </div>
-
-
-    <div class="modal-section">
-
-      <div class="modal-label">
-        PERSONALITY
-      </div>
-
-      <div
-        id="modalPersonality"
-        class="modal-text"
-      ></div>
-
-    </div>
-
-
-    <div class="modal-section">
-
-      <div class="modal-label">
-        FIRST MESSAGE
-      </div>
-
-      <div
-        id="modalGreeting"
-        class="modal-text"
-      ></div>
-
-    </div>
-
-
-    <button
-      class="chat-button"
-      onclick="startChat()"
-    >
-      Start Chat
-    </button>
-
-
-    <button
-      id="favoriteButton"
-      class="favorite-button"
-      onclick="toggleFavorite()"
-    >
-      ♡ Add to Favorites
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- ========================= -->
-<!-- BOTTOM NAV -->
-<!-- ========================= -->
-
-<nav class="bottom-nav">
-
   <button
-    id="navDiscover"
     class="nav-button active"
-    type="button"
+    data-page="discover"
     onclick="showPage('discover')"
   >
 
     <div class="nav-icon">
-      ⌂
+      🏠
     </div>
 
-    Discover
+    <div>
+      Discover
+    </div>
 
   </button>
 
 
   <button
-    id="navCreate"
     class="nav-button"
-    type="button"
-    onclick="showPage('create')"
-  >
-
-    <div class="nav-icon">
-      ＋
-    </div>
-
-    Create
-
-  </button>
-
-
-  <button
-    id="navFavorites"
-    class="nav-button"
-    type="button"
+    data-page="favorites"
     onclick="showPage('favorites')"
   >
 
     <div class="nav-icon">
-      ♡
+      ❤️
     </div>
 
-    Favorites
+    <div>
+      Favorites
+    </div>
 
   </button>
 
 
   <button
-    id="navProfile"
     class="nav-button"
-    type="button"
-    onclick="showPage('profile')"
+    data-page="create"
+    onclick="openCreate()"
   >
 
     <div class="nav-icon">
-      ◉
+      ✨
     </div>
 
-    Profile
+    <div>
+      Create
+    </div>
+
+  </button>
+
+
+  <button
+    class="nav-button"
+    data-page="profile"
+    onclick="openProfile()"
+  >
+
+    <div class="nav-icon">
+      👤
+    </div>
+
+    <div>
+      Profile
+    </div>
 
   </button>
 
 </nav>
 
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
 
 <script>
 
-/* ================================= */
-/* TELEGRAM MINI APP */
-/* ================================= */
+/* =====================================================
+   TELEGRAM
+===================================================== */
 
-const telegram =
-  window.Telegram &&
-  window.Telegram.WebApp
-    ? window.Telegram.WebApp
-    : null;
+let tg = null;
 
-if (telegram) {
+try {
 
-  telegram.ready();
+  if (
+    window.Telegram &&
+    window.Telegram.WebApp
+  ) {
 
-  telegram.expand();
+    tg = window.Telegram.WebApp;
 
-}
+    tg.ready();
 
-
-/* ================================= */
-/* DEFAULT CHARACTERS */
-/* ================================= */
-
-const defaultCharacters = [
-
-  {
-    id: "alya",
-    name: "Alya",
-    creator: "@characterverse",
-    description:
-      "A mysterious girl who seems to know more about you than she should.",
-    personality:
-      "Mysterious, intelligent and observant.",
-    greeting:
-      "You finally came...",
-    tags:
-      ["Mystery", "Romance", "Drama"],
-    avatar: "🌙"
-  },
-
-  {
-    id: "adrian",
-    name: "Adrian",
-    creator: "@characterverse",
-    description:
-      "Calm, intelligent and carrying a past he never talks about.",
-    personality:
-      "Calm, intelligent and reserved.",
-    greeting:
-      "I was wondering when you'd show up.",
-    tags:
-      ["Male", "Drama", "Roleplay"],
-    avatar: "🖤"
-  },
-
-  {
-    id: "mira",
-    name: "Mira",
-    creator: "@characterverse",
-    description:
-      "A cheerful companion who loves late-night conversations.",
-    personality:
-      "Cheerful, caring and friendly.",
-    greeting:
-      "Hey! You're still awake?",
-    tags:
-      ["Female", "Friendly", "Comfort"],
-    avatar: "✨"
-  }
-
-];
-
-
-/* ================================= */
-/* STORAGE */
-/* ================================= */
-
-function getCharacters() {
-
-  const saved =
-    localStorage.getItem(
-      "characterverse_characters"
-    );
-
-  if (!saved) {
-
-    localStorage.setItem(
-      "characterverse_characters",
-      JSON.stringify(defaultCharacters)
-    );
-
-    return defaultCharacters;
+    tg.expand();
 
   }
 
-  try {
+} catch (error) {
 
-    return JSON.parse(saved);
-
-  } catch (error) {
-
-    localStorage.setItem(
-      "characterverse_characters",
-      JSON.stringify(defaultCharacters)
-    );
-
-    return defaultCharacters;
-
-  }
-
-}
-
-
-function saveCharacters(characters) {
-
-  localStorage.setItem(
-    "characterverse_characters",
-    JSON.stringify(characters)
+  console.log(
+    "Telegram WebApp unavailable:",
+    error
   );
 
 }
 
 
-/* ================================= */
-/* ESCAPE HTML */
-/* ================================= */
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const STORAGE_KEYS = {
+
+  characters:
+    "characterverse_characters",
+
+  favorites:
+    "characterverse_favorites",
+
+  chats:
+    "characterverse_chats",
+
+  chatCount:
+    "characterverse_chat_count"
+
+};
+
+
+/* =====================================================
+   DEFAULT CHARACTERS
+===================================================== */
+
+const DEFAULT_CHARACTERS = [
+
+  {
+
+    id: "alya",
+
+    name: "Alya",
+
+    avatar:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80",
+
+    description:
+      "A quiet girl who slowly becomes comfortable around people she trusts.",
+
+    personality:
+      "Alya is calm, shy and observant. She rarely speaks first with strangers, but becomes playful around people she trusts. She tends to hide embarrassment behind short replies and subtle sarcasm.",
+
+    appearance:
+      "Young woman with dark hair and a soft appearance. Usually wears simple modest clothes.",
+
+    background:
+      "Alya grew up in a quiet environment and learned to observe people before trusting them.",
+
+    scenario:
+      "You and Alya are classmates. After class, the two of you accidentally end up alone in an empty classroom.",
+
+    greeting:
+      "*Alya looks up from her notebook when she notices you standing by the door.*\n\n\"Oh... you're still here? I thought everyone already left.\"",
+
+    examples:
+      "{{user}}: You look tired.\n{{char}}: I'm fine... just didn't sleep much last night.\n\n{{user}}: Want some coffee?\n{{char}}: ...Maybe. But don't tell anyone I accepted it.",
+
+    tags:
+      ["school", "romance", "shy"],
+
+    visibility: "public",
+
+    nsfw: false,
+
+    creator: "CharacterVerse",
+
+    createdAt: Date.now()
+
+  },
+
+
+  {
+
+    id: "adrian",
+
+    name: "Adrian",
+
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+
+    description:
+      "A confident and sarcastic university student who enjoys teasing people.",
+
+    personality:
+      "Adrian is confident, witty and sarcastic. He likes teasing people but becomes protective when someone genuinely needs help. He speaks casually and rarely admits when he cares.",
+
+    appearance:
+      "Young man with dark hair and a relaxed casual style.",
+
+    background:
+      "Adrian is known among his classmates for being intelligent but annoyingly confident.",
+
+    scenario:
+      "You are Adrian's classmate. He notices you sitting alone after everyone has left the classroom.",
+
+    greeting:
+      "*Adrian leans against the desk and looks at you with a small grin.*\n\n\"You're still here? Don't tell me you're actually studying.\"",
+
+    examples:
+      "{{user}}: You're annoying.\n{{char}}: And yet you're still talking to me. Interesting.\n\n{{user}}: Can you help me?\n{{char}}: Depends. What's in it for me?",
+
+    tags:
+      ["school", "comedy", "roleplay"],
+
+    visibility: "public",
+
+    nsfw: false,
+
+    creator: "CharacterVerse",
+
+    createdAt: Date.now()
+
+  }
+
+];
+
+
+/* =====================================================
+   DATA
+===================================================== */
+
+let characters = loadCharacters();
+
+let favorites =
+  loadJSON(
+    STORAGE_KEYS.favorites,
+    []
+  );
+
+let chats =
+  loadJSON(
+    STORAGE_KEYS.chats,
+    {}
+  );
+
+let chatCount =
+  Number(
+    localStorage.getItem(
+      STORAGE_KEYS.chatCount
+    ) || 0
+  );
+
+let currentCharacter = null;
+
+let currentCategory = "all";
+
+
+/* =====================================================
+   STORAGE FUNCTIONS
+===================================================== */
+
+function loadJSON(key, fallback) {
+
+  try {
+
+    const value =
+      localStorage.getItem(key);
+
+    if (!value) {
+
+      return fallback;
+
+    }
+
+    return JSON.parse(value);
+
+  } catch (error) {
+
+    console.error(
+      "Storage error:",
+      error
+    );
+
+    return fallback;
+
+  }
+
+}
+
+
+function saveJSON(key, value) {
+
+  try {
+
+    localStorage.setItem(
+      key,
+      JSON.stringify(value)
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Save error:",
+      error
+    );
+
+  }
+
+}
+
+
+function loadCharacters() {
+
+  const saved =
+    loadJSON(
+      STORAGE_KEYS.characters,
+      null
+    );
+
+  if (
+    Array.isArray(saved) &&
+    saved.length > 0
+  ) {
+
+    return saved;
+
+  }
+
+  saveJSON(
+    STORAGE_KEYS.characters,
+    DEFAULT_CHARACTERS
+  );
+
+  return DEFAULT_CHARACTERS;
+
+}
+
+
+/* =====================================================
+   UTILITIES
+===================================================== */
 
 function escapeHTML(value) {
 
-  return String(value || "")
+  if (value === null ||
+      value === undefined) {
 
+    return "";
+
+  }
+
+  return String(value)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -973,647 +1830,1533 @@ function escapeHTML(value) {
 }
 
 
-/* ================================= */
-/* RENDER CHARACTERS */
-/* ================================= */
+function showToast(message) {
 
-function renderCharacters() {
+  const toast =
+    document.getElementById("toast");
 
-  const list =
-    document.getElementById(
-      "characterList"
-    );
+  toast.textContent = message;
 
-  const search =
-    document.getElementById(
-      "searchInput"
-    ).value
-      .trim()
-      .toLowerCase();
+  toast.classList.add("show");
 
+  setTimeout(
+    function() {
 
-  const characters =
-    getCharacters();
+      toast.classList.remove("show");
 
-
-  const filtered =
-    characters.filter(function(character) {
-
-      const text = (
-
-        character.name +
-        " " +
-        character.description +
-        " " +
-        character.personality +
-        " " +
-        character.tags.join(" ")
-
-      ).toLowerCase();
-
-
-      return text.includes(search);
-
-    });
-
-
-  if (!filtered.length) {
-
-    list.innerHTML =
-      '<div class="empty">No characters found.</div>';
-
-    return;
-
-  }
-
-
-  list.innerHTML = "";
-
-
-  filtered.forEach(function(character) {
-
-    const card =
-      document.createElement("div");
-
-    card.className =
-      "character-card";
-
-
-    card.onclick = function() {
-
-      openCharacter(character.id);
-
-    };
-
-
-    const tags =
-      character.tags
-        .map(function(tag) {
-
-          return (
-            '<span class="tag">' +
-            escapeHTML(tag) +
-            '</span>'
-          );
-
-        })
-        .join("");
-
-
-    card.innerHTML =
-
-      '<div class="character-top">' +
-
-        '<div class="avatar">' +
-          escapeHTML(character.avatar || "✨") +
-        '</div>' +
-
-        '<div>' +
-
-          '<div class="character-name">' +
-            escapeHTML(character.name) +
-          '</div>' +
-
-          '<div class="creator">' +
-            escapeHTML(character.creator || "@guest") +
-          '</div>' +
-
-        '</div>' +
-
-      '</div>' +
-
-      '<div class="description">' +
-        escapeHTML(character.description) +
-      '</div>' +
-
-      '<div class="tags">' +
-        tags +
-      '</div>';
-
-
-    list.appendChild(card);
-
-  });
-
-}
-
-
-/* ================================= */
-/* CREATE CHARACTER */
-/* ================================= */
-
-function createCharacter() {
-
-  const name =
-    document.getElementById(
-      "characterName"
-    ).value.trim();
-
-
-  const creator =
-    document.getElementById(
-      "characterCreator"
-    ).value.trim();
-
-
-  const description =
-    document.getElementById(
-      "characterDescription"
-    ).value.trim();
-
-
-  const personality =
-    document.getElementById(
-      "characterPersonality"
-    ).value.trim();
-
-
-  const greeting =
-    document.getElementById(
-      "characterGreeting"
-    ).value.trim();
-
-
-  const tagsText =
-    document.getElementById(
-      "characterTags"
-    ).value.trim();
-
-
-  /* VALIDATION */
-
-  if (!name) {
-
-    showMessage(
-      "Character name is required."
-    );
-
-    return;
-
-  }
-
-
-  if (!description) {
-
-    showMessage(
-      "Character description is required."
-    );
-
-    return;
-
-  }
-
-
-  let tags = [];
-
-
-  if (tagsText) {
-
-    tags =
-      tagsText
-        .split(",")
-        .map(function(tag) {
-
-          return tag.trim();
-
-        })
-        .filter(function(tag) {
-
-          return tag.length > 0;
-
-        });
-
-  }
-
-
-  if (!tags.length) {
-
-    tags = ["Original"];
-
-  }
-
-
-  /* NEW CHARACTER */
-
-  const character = {
-
-    id:
-      "character_" +
-      Date.now(),
-
-    name:
-      name,
-
-    creator:
-      creator || "@guest",
-
-    description:
-      description,
-
-    personality:
-      personality || "Not specified.",
-
-    greeting:
-      greeting || "Hello...",
-
-    tags:
-      tags,
-
-    avatar:
-      "✨"
-
-  };
-
-
-  /* SAVE */
-
-  const characters =
-    getCharacters();
-
-
-  characters.unshift(character);
-
-
-  saveCharacters(characters);
-
-
-  /* CLEAR FORM */
-
-  document.getElementById(
-    "characterName"
-  ).value = "";
-
-
-  document.getElementById(
-    "characterCreator"
-  ).value = "";
-
-
-  document.getElementById(
-    "characterDescription"
-  ).value = "";
-
-
-  document.getElementById(
-    "characterPersonality"
-  ).value = "";
-
-
-  document.getElementById(
-    "characterGreeting"
-  ).value = "";
-
-
-  document.getElementById(
-    "characterTags"
-  ).value = "";
-
-
-  /* SUCCESS */
-
-  showMessage(
-    "Character created successfully!"
-  );
-
-
-  renderCharacters();
-
-
-  setTimeout(function() {
-
-    showPage("discover");
-
-  }, 700);
-
-}
-
-
-/* ================================= */
-/* SHOW MESSAGE */
-/* ===========================List");
-
-  const search =
-    document
-      .getElementById("searchInput")
-      .value
-      .toLowerCase();
-
-  const characters =
-    getCharacters();
-
-  const filtered =
-    characters.filter(character => {
-
-      const text =
-        (
-          character.name +
-          " " +
-          character.description +
-          " " +
-          character.tags.join(" ")
-        ).toLowerCase();
-
-      return text.includes(search);
-
-    });
-
-
-  if (filtered.length === 0) {
-
-    list.innerHTML =
-      '<div class="empty">No characters found.</div>';
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    filtered.map(character => `
-
-      <div
-        class="character"
-        onclick="openCharacter('${character.id}')"
-      >
-
-        <div class="top">
-
-          <div class="avatar">
-            ${character.avatar || "✨"}
-          </div>
-
-          <div>
-
-            <div class="name">
-              ${escapeHTML(character.name)}
-            </div>
-
-            <div class="creator">
-              ${escapeHTML(character.creator)}
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="description">
-          ${escapeHTML(character.description)}
-        </div>
-
-
-        <div class="tags">
-
-          ${character.tags.map(tag => `
-            <span class="tag">
-              ${escapeHTML(tag)}
-            </span>
-          `).join("")}
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* CREATE CHARACTER */
-
-function createCharacter() {
-
-  const name =
-    document.getElementById("characterName").value.trim();
-
-  const creator =
-    document.getElementById("creatorName").value.trim();
-
-  const description =
-    document.getElementById("characterDescription").value.trim();
-
-  const personality =
-    document.getElementById("characterPersonality").value.trim();
-
-  const greeting =
-    document.getElementById("characterGreeting").value.trim();
-
-  const tagsText =
-    document.getElementById("characterTags").value.trim();
-
-
-  if (!name || !description) {
-
-    alert("Character name and description are required.");
-
-    return;
-
-  }
-
-
-  const tags =
-    tagsText
-      ? tagsText
-          .split(",")
-          .map(tag => tag.trim())
-          .filter(Boolean)
-      : ["Original"];
-
-
-  const character = {
-
-    id:
-      "character-" +
-      Date.now(),
-
-    name,
-
-    creator:
-      creator || "@guest",
-
-    description,
-
-    personality,
-
-    greeting,
-
-    tags,
-
-    avatar: "✨"
-
-  };
-
-
-  const characters =
-    getCharacters();
-
-
-  characters.unshift(character);
-
-
-  saveCharacters(characters);
-
-
-  /* RESET FORM */
-
-  document.getElementById("characterName").value = "";
-  document.getElementById("creatorName").value = "";
-  document.getElementById("characterDescription").value = "";
-  document.getElementById("characterPersonality").value = "";
-  document.getElementById("characterGreeting").value = "";
-  document.getElementById("characterTags").value = "";
-
-
-  alert(
-    "Character created successfully!"
-  );
-
-
-  showPage("discover");
-
-  renderCharacters();
-
-}
-
-
-/* CHARACTER CLICK */
-
-function openCharacter(id) {
-
-  const characters =
-    getCharacters();
-
-  const character =
-    characters.find(c => c.id === id);
-
-  if (!character) return;
-
-
-  alert(
-    character.name +
-    "\n\n" +
-    character.description +
-    "\n\nGreeting:\n" +
-    character.greeting
+    },
+    2200
   );
 
 }
 
 
-/* PAGE NAVIGATION */
+/* =====================================================
+   PAGE SYSTEM
+===================================================== */
 
-function showPage(page) {
+function showPage(pageName) {
 
-  const pages = {
+  const pages =
+    document.querySelectorAll(".page");
 
-    discover:
-      document.getElementById("discoverPage"),
+  pages.forEach(
+    function(page) {
 
-    create:
-      document.getElementById("createPage"),
+      page.classList.remove("active");
 
-    favorites:
-      document.getElementById("favoritesPage"),
-
-    profile:
-      document.getElementById("profilePage")
-
-  };
+    }
+  );
 
 
-  Object.values(pages).forEach(p => {
+  const target =
+    document.getElementById(
+      "page-" + pageName
+    );
 
-    p.classList.remove("active");
+  if (target) {
 
+    target.classList.add("active");
+
+  }
+
+
+  const navButtons =
+    document.querySelectorAll(
+      ".nav-button"
+    );
+
+  navButtons.forEach(
+    function(button) {
+
+      button.classList.remove("active");
+
+      if (
+        button.dataset.page === pageName
+      ) {
+
+        button.classList.add("active");
+
+      }
+
+    }
+  );
+
+
+  const bottomNav =
+    document.getElementById(
+      "bottomNav"
+    );
+
+  if (
+    pageName === "chat" ||
+    pageName === "detail" ||
+    pageName === "create"
+  ) {
+
+    bottomNav.style.display = "none";
+
+  } else {
+
+    bottomNav.style.display = "flex";
+
+  }
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
   });
 
 
-  pages[page].classList.add("active");
+  if (pageName === "discover") {
 
-
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(item => {
-
-      item.classList.remove("active");
-
-    });
-
-
-  if (page === "discover") {
-
-    document
-      .getElementById("navDiscover")
-      .classList.add("active");
+    renderCharacters();
 
   }
 
-
-  if (page === "create") {
-
-    document
-      .getElementById("navCreate")
-      .classList.add("active");
-
-  }
-
-
-  if (page === "favorites") {
-
-    document
-      .getElementById("navFavorites")
-      .classList.add("active");
+  if (pageName === "favorites") {
 
     renderFavorites();
 
   }
 
+  if (pageName === "profile") {
 
-  if (page === "profile") {
+    renderProfile();
 
-    document
-      .getElementById("navProfile")
-      .classList.add("active");
+  }
+
+}
+
+
+/* =====================================================
+   DISCOVER
+===================================================== */
+
+function renderCharacters() {
+
+  const grid =
+    document.getElementById(
+      "characterGrid"
+    );
+
+  if (!grid) return;
+
+
+  const search =
+    (
+      document.getElementById(
+        "searchInput"
+      )?.value || ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  let filtered =
+    characters.filter(
+      function(character) {
+
+        const matchesSearch =
+          !search ||
+          character.name
+            .toLowerCase()
+            .includes(search) ||
+          character.description
+            .toLowerCase()
+            .includes(search) ||
+          character.tags.some(
+            function(tag) {
+
+              return tag
+                .toLowerCase()
+                .includes(search);
+
+            }
+          );
+
+
+        const matchesCategory =
+          currentCategory === "all" ||
+          character.tags.some(
+            function(tag) {
+
+              return tag
+                .toLowerCase() ===
+                currentCategory;
+
+            }
+          );
+
+
+        return (
+          matchesSearch &&
+          matchesCategory
+        );
+
+      }
+    );
+
+
+  if (filtered.length === 0) {
+
+    grid.innerHTML = `
+      <div
+        class="empty"
+        style="grid-column:1/-1"
+      >
+        <div class="empty-icon">🔎</div>
+        <div>No characters found.</div>
+      </div>
+    `;
+
+    return;
 
   }
 
 
-  window.scrollTo(0, 0);
+  grid.innerHTML =
+    filtered
+      .map(
+        function(character) {
+
+          return characterCard(
+            character
+          );
+
+        }
+      )
+      .join("");
 
 }
 
 
-/* FAVORITES */
+function characterCard(character) {
+
+  const isFavorite =
+    favorites.includes(
+      character.id
+    );
+
+
+  return `
+
+    <article
+      class="character-card"
+      onclick="openCharacter('${character.id}')"
+    >
+
+      <img
+        class="character-image"
+        src="${escapeHTML(character.avatar)}"
+        alt="${escapeHTML(character.name)}"
+        onerror="this.src='https://placehold.co/600x600/202028/ffffff?text=Character'"
+      >
+
+      <div class="character-content">
+
+        <div class="character-name">
+          ${escapeHTML(character.name)}
+        </div>
+
+        <div class="character-creator">
+          by ${escapeHTML(character.creator || "Unknown")}
+        </div>
+
+        <div class="character-description">
+          ${escapeHTML(character.description)}
+        </div>
+
+        <div class="tags">
+
+          ${
+            character.tags
+              .slice(0, 3)
+              .map(
+                function(tag) {
+
+                  return `
+                    <span class="tag">
+                      ${escapeHTML(tag)}
+                    </span>
+                  `;
+
+                }
+              )
+              .join("")
+          }
+
+        </div>
+
+        <div class="card-actions">
+
+          <button
+            class="small-button"
+            onclick="event.stopPropagation(); toggleFavorite('${character.id}')"
+          >
+            ${isFavorite ? "♥" : "♡"}
+          </button>
+
+          <button
+            class="small-button primary"
+            onclick="event.stopPropagation(); startChat('${character.id}')"
+          >
+            Chat
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+function searchCharacters() {
+
+  renderCharacters();
+
+}
+
+
+function filterCategory(
+  category,
+  element
+) {
+
+  currentCategory = category;
+
+
+  document
+    .querySelectorAll(".category")
+    .forEach(
+      function(button) {
+
+        button.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+  if (element) {
+
+    element.classList.add(
+      "active"
+    );
+
+  }
+
+
+  renderCharacters();
+
+}
+
+
+/* =====================================================
+   CREATE CHARACTER
+===================================================== */
+
+function openCreate() {
+
+  showPage("create");
+
+}
+
+
+function previewAvatar() {
+
+  const url =
+    document.getElementById(
+      "characterAvatar"
+    ).value.trim();
+
+
+  const preview =
+    document.getElementById(
+      "avatarPreview"
+    );
+
+
+  if (url) {
+
+    preview.src = url;
+
+  } else {
+
+    preview.src =
+      "https://placehold.co/200x200/202028/ffffff?text=Avatar";
+
+  }
+
+}
+
+
+function createCharacter() {
+
+  try {
+
+    const name =
+      document.getElementById(
+        "characterName"
+      ).value.trim();
+
+
+    const avatar =
+      document.getElementById(
+        "characterAvatar"
+      ).value.trim();
+
+
+    const description =
+      document.getElementById(
+        "characterDescription"
+      ).value.trim();
+
+
+    const personality =
+      document.getElementById(
+        "characterPersonality"
+      ).value.trim();
+
+
+    const appearance =
+      document.getElementById(
+        "characterAppearance"
+      ).value.trim();
+
+
+    const background =
+      document.getElementById(
+        "characterBackground"
+      ).value.trim();
+
+
+    const scenario =
+      document.getElementById(
+        "characterScenario"
+      ).value.trim();
+
+
+    const greeting =
+      document.getElementById(
+        "characterGreeting"
+      ).value.trim();
+
+
+    const examples =
+      document.getElementById(
+        "characterExamples"
+      ).value.trim();
+
+
+    const tagsInput =
+      document.getElementById(
+        "characterTags"
+      ).value.trim();
+
+
+    const visibility =
+      document.getElementById(
+        "characterVisibility"
+      ).value;
+
+
+    const nsfw =
+      document.getElementById(
+        "characterNSFW"
+      ).checked;
+
+
+    /* REQUIRED FIELDS */
+
+    if (!name) {
+
+      showToast(
+        "Character Name wajib diisi."
+      );
+
+      return;
+
+    }
+
+
+    if (!description) {
+
+      showToast(
+        "Short Description wajib diisi."
+      );
+
+      return;
+
+    }
+
+
+    if (!personality) {
+
+      showToast(
+        "Personality wajib diisi."
+      );
+
+      return;
+
+    }
+
+
+    if (!scenario) {
+
+      showToast(
+        "Scenario wajib diisi."
+      );
+
+      return;
+
+    }
+
+
+    if (!greeting) {
+
+      showToast(
+        "Greeting wajib diisi."
+      );
+
+      return;
+
+    }
+
+
+    const tags =
+      tagsInput
+        ? tagsInput
+            .split(",")
+            .map(
+              function(tag) {
+
+                return tag.trim().toLowerCase();
+
+              }
+            )
+            .filter(Boolean)
+        : [];
+
+
+    const character = {
+
+      id:
+        "char_" +
+        Date.now() +
+        "_" +
+        Math.random()
+          .toString(36)
+          .slice(2, 8),
+
+      name: name,
+
+      avatar:
+        avatar ||
+        "https://placehold.co/600x600/202028/ffffff?text=" +
+        encodeURIComponent(name),
+
+      description: description,
+
+      personality: personality,
+
+      appearance: appearance,
+
+      background: background,
+
+      scenario: scenario,
+
+      greeting: greeting,
+
+      examples: examples,
+
+      tags: tags,
+
+      visibility: visibility,
+
+      nsfw: nsfw,
+
+      creator:
+        getTelegramName(),
+
+      createdAt:
+        Date.now()
+
+    };
+
+
+    characters.unshift(
+      character
+    );
+
+
+    saveJSON(
+      STORAGE_KEYS.characters,
+      characters
+    );
+
+
+    showToast(
+      "Character created successfully!"
+    );
+
+
+    clearCreateForm();
+
+
+    setTimeout(
+      function() {
+
+        openCharacter(
+          character.id
+        );
+
+      },
+      500
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "CREATE CHARACTER ERROR:",
+      error
+    );
+
+    showToast(
+      "Terjadi error. Coba lagi."
+    );
+
+  }
+
+}
+
+
+function clearCreateForm() {
+
+  const ids = [
+
+    "characterName",
+    "characterAvatar",
+    "characterDescription",
+    "characterPersonality",
+    "characterAppearance",
+    "characterBackground",
+    "characterScenario",
+    "characterGreeting",
+    "characterExamples",
+    "characterTags"
+
+  ];
+
+
+  ids.forEach(
+    function(id) {
+
+      const element =
+        document.getElementById(id);
+
+      if (element) {
+
+        element.value = "";
+
+      }
+
+    }
+  );
+
+
+  document.getElementById(
+    "characterVisibility"
+  ).value = "public";
+
+
+  document.getElementById(
+    "characterNSFW"
+  ).checked = false;
+
+
+  document.getElementById(
+    "avatarPreview"
+  ).src =
+    "https://placehold.co/200x200/202028/ffffff?text=Avatar";
+
+}
+
+
+/* =====================================================
+   CHARACTER DETAIL
+===================================================== */
+
+function openCharacter(id) {
+
+  const character =
+    characters.find(
+      function(item) {
+
+        return item.id === id;
+
+      }
+    );
+
+
+  if (!character) {
+
+    showToast(
+      "Character not found."
+    );
+
+    return;
+
+  }
+
+
+  currentCharacter =
+    character;
+
+
+  document.getElementById(
+    "detailAvatar"
+  ).src =
+    character.avatar;
+
+
+  document.getElementById(
+    "detailName"
+  ).textContent =
+    character.name;
+
+
+  document.getElementById(
+    "detailCreator"
+  ).textContent =
+    "Created by " +
+    (character.creator || "Unknown");
+
+
+  document.getElementById(
+    "detailDescription"
+  ).textContent =
+    character.description;
+
+
+  document.getElementById(
+    "detailPersonality"
+  ).textContent =
+    character.personality ||
+    "No personality information.";
+
+
+  document.getElementById(
+    "detailAppearance"
+  ).textContent =
+    character.appearance ||
+    "No appearance information.";
+
+
+  document.getElementById(
+    "detailScenario"
+  ).textContent =
+    character.scenario;
+
+
+  const tags =
+    document.getElementById(
+      "detailTags"
+    );
+
+
+  tags.innerHTML =
+    character.tags
+      .map(
+        function(tag) {
+
+          return `
+            <span class="tag">
+              ${escapeHTML(tag)}
+            </span>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  updateFavoriteButton();
+
+
+  showPage("detail");
+
+}
+
+
+function updateFavoriteButton() {
+
+  if (!currentCharacter) return;
+
+
+  const button =
+    document.getElementById(
+      "detailFavoriteButton"
+    );
+
+
+  if (
+    favorites.includes(
+      currentCharacter.id
+    )
+  ) {
+
+    button.textContent =
+      "♥ Favorited";
+
+  } else {
+
+    button.textContent =
+      "♡ Favorite";
+
+  }
+
+}
+
+
+/* =====================================================
+   FAVORITES
+===================================================== */
+
+function toggleFavorite(id) {
+
+  if (
+    favorites.includes(id)
+  ) {
+
+    favorites =
+      favorites.filter(
+        function(item) {
+
+          return item !== id;
+
+        }
+      );
+
+    showToast(
+      "Removed from favorites."
+    );
+
+  } else {
+
+    favorites.push(id);
+
+    showToast(
+      "Added to favorites."
+    );
+
+  }
+
+
+  saveJSON(
+    STORAGE_KEYS.favorites,
+    favorites
+  );
+
+
+  renderCharacters();
+
+
+  if (
+    currentCharacter &&
+    currentCharacter.id === id
+  ) {
+
+    updateFavoriteButton();
+
+  }
+
+}
+
+
+function toggleCurrentFavorite() {
+
+  if (!currentCharacter) return;
+
+  toggleFavorite(
+    currentCharacter.id
+  );
+
+}
+
 
 function renderFavorites() {
 
-  const list =
-    document.getElementById("favoriteList");
+  const grid =
+    document.getElementById(
+      "favoritesGrid"
+    );
 
-  list.innerHTML =
-    '<div class="empty">No favorite characters yet.</div>';
+
+  const favoriteCharacters =
+    characters.filter(
+      function(character) {
+
+        return favorites.includes(
+          character.id
+        );
+
+      }
+    );
+
+
+  if (
+    favoriteCharacters.length === 0
+  ) {
+
+    grid.innerHTML = `
+
+      <div
+        class="empty"
+        style="grid-column:1/-1"
+      >
+
+        <div class="empty-icon">
+          ♡
+        </div>
+
+        <div>
+          Belum ada favorite.
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    favoriteCharacters
+      .map(
+        function(character) {
+
+          return characterCard(
+            character
+          );
+
+        }
+      )
+      .join("");
 
 }
 
 
-/* HTML SECURITY */
+/* =====================================================
+   TELEGRAM USER
+===================================================== */
 
-function escapeHTML(text) {
+function getTelegramUser() {
+
+  try {
+
+    if (
+      tg &&
+      tg.initDataUnsafe &&
+      tg.initDataUnsafe.user
+    ) {
+
+      return tg.initDataUnsafe.user;
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+
+  return null;
+
+}
+
+
+function getTelegramName() {
+
+  const user =
+    getTelegramUser();
+
+
+  if (!user) {
+
+    return "Anonymous";
+
+  }
+
+
+  const fullName =
+    [
+      user.first_name,
+      user.last_name
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+
+  return (
+    fullName ||
+    user.username ||
+    "Telegram User"
+  );
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+function openProfile() {
+
+  showPage("profile");
+
+}
+
+
+function renderProfile() {
+
+  const user =
+    getTelegramUser();
+
+
+  const name =
+    user
+      ? [
+          user.first_name,
+          user.last_name
+        ]
+          .filter(Boolean)
+          .join(" ")
+      : "Telegram User";
+
+
+  const username =
+    user &&
+    user.username
+      ? "@" + user.username
+      : "@user";
+
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    name || "Telegram User";
+
+
+  document.getElementById(
+    "profileUsername"
+  ).textContent =
+    username;
+
+
+  if (
+    user &&
+    user.photo_url
+  ) {
+
+    document.getElementById(
+      "profileAvatar"
+    ).src =
+      user.photo_url;
+
+  }
+
+
+  const myCharacters =
+    characters.filter(
+      function(character) {
+
+        return character.creator ===
+          getTelegramName();
+
+      }
+    );
+
+
+  document.getElementById(
+    "createdCount"
+  ).textContent =
+    myCharacters.length;
+
+
+  document.getElementById(
+    "favoriteCount"
+  ).textContent =
+    favorites.length;
+
+
+  document.getElementById(
+    "chatCount"
+  ).textContent =
+    chatCount;
+
+
+  const grid =
+    document.getElementById(
+      "myCharactersGrid"
+    );
+
+
+  if (
+    myCharacters.length === 0
+  ) {
+
+    grid.innerHTML = `
+
+      <div
+        class="empty"
+        style="grid-column:1/-1"
+      >
+
+        <div class="empty-icon">
+          ✨
+        </div>
+
+        <div>
+          Lu belum membuat character.
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    myCharacters
+      .map(
+        function(character) {
+
+          return characterCard(
+            character
+          );
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* =====================================================
+   CHAT
+===================================================== */
+
+function startCurrentChat() {
+
+  if (!currentCharacter) return;
+
+  startChat(
+    currentCharacter.id
+  );
+
+}
+
+
+function startChat(id) {
+
+  const character =
+    characters.find(
+      function(item) {
+
+        return item.id === id;
+
+      }
+    );
+
+
+  if (!character) {
+
+    showToast(
+      "Character not found."
+    );
+
+    return;
+
+  }
+
+
+  currentCharacter =
+    character;
+
+
+  document.getElementById(
+    "chatAvatar"
+  ).src =
+    character.avatar;
+
+
+  document.getElementById(
+    "chatCharacterName"
+  ).textContent =
+    character.name;
+
+
+  loadChat(
+    character
+  );
+
+
+  showPage("chat");
+
+}
+
+
+function loadChat(character) {
+
+  const container =
+    document.getElementById(
+      "chatMessages"
+    );
+
+
+  const chat =
+    chats[character.id];
+
+
+  if (
+    Array.isArray(chat) &&
+    chat.length > 0
+  ) {
+
+    container.innerHTML =
+      chat
+        .map(
+          function(message) {
+
+            return renderMessage(
+              message.role,
+              message.content
+            );
+
+          }
+        )
+        .join("");
+
+    scrollChat();
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    renderMessage(
+      "character",
+      character.greeting
+    );
+
+
+  chats[character.id] = [
+
+    {
+      role: "character",
+      content: character.greeting
+    }
+
+  ];
+
+
+  saveJSON(
+    STORAGE_KEYS.chats,
+    chats
+  );
+
+
+  scrollChat();
+
+}
+
+
+function renderMessage(
+  role,
+  content
+) {
+
+  return `
+
+    <div class="message ${role}">
+
+      <div class="message-bubble">
+
+        ${escapeHTML(content)}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+function sendMessage() {
+
+  const input =
+    document.getElementById(
+      "chatInput"
+    );
+
+
+  const text =
+    input.value.trim();
+
+
+  if (!text) return;
+
+
+  if (!currentCharacter) {
+
+    return;
+
+  }
+
+
+  const characterId =
+    currentCharacter.id;
+
+
+  if (!chats[characterId]) {
+
+    chats[characterId] = [];
+
+  }
+
+
+  chats[characterId].push({
+
+    role: "user",
+
+    content: text
+
+  });
+
+
+  const container =
+    document.getElementById(
+      "chatMessages"
+    );
+
+
+  container.insertAdjacentHTML(
+    "beforeend",
+    renderMessage(
+      "user",
+      text
+    )
+  );
+
+
+  input.value = "";
+
+
+  chatCount++;
+
+
+  localStorage.setItem(
+    STORAGE_KEYS.chatCount,
+    String(chatCount)
+  );
+
+
+  saveJSON(
+    STORAGE_KEYS.chats,
+    chats
+  );
+
+
+  scrollChat();
+
+
+  /*
+    DEMO RESPONSE
+
+    NANTI BAGIAN INI DIGANTI
+    DENGAN API BACKEND + AI MODEL.
+  */
+
+  setTimeout(
+    function() {
+
+      const response =
+        generateDemoResponse(
+          text,
+          currentCharacter
+        );
+
+
+      chats[characterId].push({
+
+        role: "character",
+
+        content: response
+
+      });
+
+
+      container.insertAdjacentHTML(
+        "beforeend",
+        renderMessage(
+          "character",
+          response
+        )
+      );
+
+
+      saveJSON(
+        STORAGE_KEYS.chats,
+        chats
+      );
+
+
+      scrollChat();
+
+    },
+    650
+  );
+
+}
+
+
+function generateDemoResponse(
+  userMessage,
+  character
+) {
+
+  const name =
+    character.name;
+
+
+  return (
+    "*" +
+    name +
+    " looks at you for a moment.*\n\n" +
+    "\"Hmm... I heard you. " +
+    escapeForText(
+      userMessage
+    ) +
+    "\"\n\n" +
+    "(Demo response — AI backend will be connected later.)"
+  );
+
+}
+
+
+function escapeForText(text) {
 
   return String(text)
-
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replace(/\n/g, " ")
+    .slice(0, 180);
 
 }
 
 
-/* INITIAL LOAD */
+function handleChatKey(event) {
 
-renderCharacters();
+  if (
+    event.key === "Enter" &&
+    !event.shiftKey
+  ) {
+
+    event.preventDefault();
+
+    sendMessage();
+
+  }
+
+}
+
+
+function scrollChat() {
+
+  setTimeout(
+    function() {
+
+      window.scrollTo({
+        top:
+          document.body.scrollHeight,
+        behavior: "smooth"
+      });
+
+    },
+    50
+  );
+
+}
+
+
+function closeChat() {
+
+  showPage(
+    "discover"
+  );
+
+}
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+function initializeApp() {
+
+  renderCharacters();
+
+  renderProfile();
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    initializeApp();
+
+  }
+);
 
 </script>
 
