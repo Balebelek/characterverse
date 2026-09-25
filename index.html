@@ -1,342 +1,992 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CharacterVerse</title>
 
-  <title>CharacterVerse</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+body {
+  background: #090b10;
+  color: #f5f5f7;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
 
-    body {
-      background: #0b0d12;
-      color: #f5f5f7;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-    }
+button,
+input,
+textarea {
+  font-family: inherit;
+}
 
-    header {
-      padding: 22px 18px 14px;
-      border-bottom: 1px solid #20232c;
-      position: sticky;
-      top: 0;
-      background: #0b0d12;
-      z-index: 10;
-    }
+button {
+  cursor: pointer;
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: 700;
-    }
+header {
+  padding: 20px 18px 15px;
+  border-bottom: 1px solid #20242e;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #090b10;
+}
 
-    .subtitle {
-      color: #858b9b;
-      font-size: 13px;
-      margin-top: 5px;
-    }
+.logo {
+  font-size: 23px;
+  font-weight: 700;
+}
 
-    .container {
-      padding: 18px;
-      max-width: 700px;
-      margin: auto;
-    }
+.subtitle {
+  color: #7f8798;
+  font-size: 12px;
+  margin-top: 5px;
+}
 
-    .search {
-      width: 100%;
-      padding: 15px 16px;
-      border-radius: 13px;
-      border: 1px solid #292d38;
-      background: #151820;
-      color: white;
-      outline: none;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 18px;
+  padding-bottom: 90px;
+}
 
-    .search:focus {
-      border-color: #596273;
-    }
+.search {
+  width: 100%;
+  padding: 14px 15px;
+  border-radius: 13px;
+  border: 1px solid #282d38;
+  background: #141720;
+  color: white;
+  outline: none;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
 
-    .section {
-      margin-bottom: 28px;
-    }
+.search:focus {
+  border-color: #596273;
+}
 
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 13px;
-    }
+.section {
+  margin-bottom: 28px;
+}
 
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-    }
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
+}
 
-    .see-all {
-      color: #8f96a8;
-      font-size: 13px;
-    }
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+}
 
-    .character {
-      background: #151820;
-      border: 1px solid #242833;
-      border-radius: 17px;
-      padding: 16px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+.see-all {
+  color: #858c9d;
+  font-size: 12px;
+}
 
-    .character:hover {
-      border-color: #414858;
-      transform: translateY(-1px);
-    }
+.character {
+  background: #141720;
+  border: 1px solid #242934;
+  border-radius: 17px;
+  padding: 15px;
+  margin-bottom: 12px;
+}
 
-    .top {
-      display: flex;
-      gap: 13px;
-      align-items: center;
-    }
+.top {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+}
 
-    .avatar {
-      width: 55px;
-      height: 55px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #303746, #171a22);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 23px;
-      flex-shrink: 0;
-    }
+.avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #303746, #171a22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  flex-shrink: 0;
+}
 
-    .name {
-      font-size: 16px;
-      font-weight: 700;
-    }
+.name {
+  font-size: 16px;
+  font-weight: 700;
+}
 
-    .creator {
-      color: #777e90;
-      font-size: 12px;
-      margin-top: 4px;
-    }
+.creator {
+  color: #777f91;
+  font-size: 12px;
+  margin-top: 4px;
+}
 
-    .description {
-      color: #a2a8b7;
-      font-size: 13px;
-      line-height: 1.5;
-      margin-top: 12px;
-    }
+.description {
+  color: #a1a8b7;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
 
-    .tags {
-      margin-top: 11px;
-    }
+.tags {
+  margin-top: 11px;
+}
 
-    .tag {
-      display: inline-block;
-      background: #202530;
-      color: #9da5b6;
-      padding: 5px 8px;
-      border-radius: 7px;
-      font-size: 11px;
-      margin-right: 5px;
-    }
+.tag {
+  display: inline-block;
+  background: #202530;
+  color: #9da5b6;
+  padding: 5px 8px;
+  border-radius: 7px;
+  font-size: 11px;
+  margin-right: 5px;
+  margin-bottom: 4px;
+}
 
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 65px;
-      background: #101219;
-      border-top: 1px solid #242833;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-    }
+/* CREATE PAGE */
 
-    .nav-item {
-      color: #777e8f;
-      font-size: 11px;
-      text-align: center;
-    }
+.page {
+  display: none;
+}
 
-    .nav-item.active {
-      color: white;
-    }
+.page.active {
+  display: block;
+}
 
-    .nav-icon {
-      font-size: 19px;
-      margin-bottom: 3px;
-    }
+.back {
+  background: none;
+  border: none;
+  color: #aeb5c5;
+  font-size: 14px;
+  margin-bottom: 20px;
+  padding: 0;
+}
 
-    .spacer {
-      height: 75px;
-    }
-  </style>
+.form-title {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.form-subtitle {
+  color: #858c9c;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  border: 1px solid #292e39;
+  background: #141720;
+  color: white;
+  border-radius: 12px;
+  padding: 13px;
+  outline: none;
+  font-size: 14px;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: #5d6678;
+}
+
+.form-textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.create-button {
+  width: 100%;
+  border: none;
+  background: white;
+  color: #08090d;
+  padding: 14px;
+  border-radius: 13px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+.create-button:active {
+  transform: scale(.98);
+}
+
+/* PROFILE */
+
+.profile-box {
+  background: #141720;
+  border: 1px solid #242934;
+  border-radius: 17px;
+  padding: 22px;
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #272d39;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  font-size: 28px;
+}
+
+.profile-name {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.profile-text {
+  color: #858c9c;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 65px;
+  background: #101219;
+  border-top: 1px solid #242934;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 50;
+}
+
+.nav-item {
+  background: none;
+  border: none;
+  color: #72798a;
+  font-size: 11px;
+  text-align: center;
+}
+
+.nav-item.active {
+  color: white;
+}
+
+.nav-icon {
+  font-size: 19px;
+  margin-bottom: 3px;
+}
+
+.empty {
+  color: #72798a;
+  text-align: center;
+  padding: 30px 10px;
+  font-size: 13px;
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">CharacterVerse</div>
-    <div class="subtitle">Your world. Your characters.</div>
-  </header>
+<header>
+  <div class="logo">CharacterVerse</div>
+  <div class="subtitle">Your world. Your characters.</div>
+</header>
 
-  <main class="container">
+
+<!-- DISCOVER -->
+
+<main id="discoverPage" class="page active">
+
+  <div class="container">
 
     <input
+      id="searchInput"
       class="search"
       type="text"
       placeholder="Search characters..."
-      onkeyup="searchCharacters()"
-      id="search"
+      oninput="renderCharacters()"
     >
 
     <section class="section">
 
       <div class="section-header">
         <div class="section-title">Trending</div>
-        <div class="see-all">See all</div>
+        <div class="see-all">Explore</div>
       </div>
 
-      <div class="character">
-        <div class="top">
-          <div class="avatar">🌙</div>
-
-          <div>
-            <div class="name">Alya</div>
-            <div class="creator">@characterverse</div>
-          </div>
-        </div>
-
-        <div class="description">
-          A mysterious girl who seems to know more about you than she should.
-        </div>
-
-        <div class="tags">
-          <span class="tag">Mystery</span>
-          <span class="tag">Romance</span>
-          <span class="tag">Drama</span>
-        </div>
-      </div>
-
-      <div class="character">
-        <div class="top">
-          <div class="avatar">🖤</div>
-
-          <div>
-            <div class="name">Adrian</div>
-            <div class="creator">@characterverse</div>
-          </div>
-        </div>
-
-        <div class="description">
-          Calm, intelligent and carrying a past he never talks about.
-        </div>
-
-        <div class="tags">
-          <span class="tag">Male</span>
-          <span class="tag">Drama</span>
-          <span class="tag">Roleplay</span>
-        </div>
-      </div>
+      <div id="characterList"></div>
 
     </section>
 
+  </div>
 
-    <section class="section">
-
-      <div class="section-header">
-        <div class="section-title">New Characters</div>
-        <div class="see-all">See all</div>
-      </div>
-
-      <div class="character">
-        <div class="top">
-          <div class="avatar">✨</div>
-
-          <div>
-            <div class="name">Mira</div>
-            <div class="creator">@newcreator</div>
-          </div>
-        </div>
-
-        <div class="description">
-          A cheerful companion who loves late-night conversations.
-        </div>
-
-        <div class="tags">
-          <span class="tag">Female</span>
-          <span class="tag">Friendly</span>
-          <span class="tag">Comfort</span>
-        </div>
-      </div>
-
-    </section>
-
-    <div class="spacer"></div>
-
-  </main>
+</main>
 
 
-  <nav class="bottom-nav">
+<!-- CREATE -->
 
-    <div class="nav-item active">
-      <div class="nav-icon">⌂</div>
-      Discover
+<main id="createPage" class="page">
+
+  <div class="container">
+
+    <button class="back" onclick="showPage('discover')">
+      ← Back to Discover
+    </button>
+
+    <div class="form-title">
+      Create Character
     </div>
 
-    <div class="nav-item">
-      <div class="nav-icon">＋</div>
-      Create
+    <div class="form-subtitle">
+      Create your own AI character and bring them to life.
     </div>
 
-    <div class="nav-item">
-      <div class="nav-icon">♡</div>
+
+    <div class="form-group">
+
+      <label class="form-label">
+        Character Name
+      </label>
+
+      <input
+        id="characterName"
+        class="form-input"
+        type="text"
+        placeholder="e.g. Aisyah"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">
+        Creator Name
+      </label>
+
+      <input
+        id="creatorName"
+        class="form-input"
+        type="text"
+        placeholder="e.g. @yourname"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">
+        Description
+      </label>
+
+      <textarea
+        id="characterDescription"
+        class="form-textarea"
+        placeholder="Describe your character..."
+      ></textarea>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">
+        Personality
+      </label>
+
+      <textarea
+        id="characterPersonality"
+        class="form-textarea"
+        placeholder="Calm, caring, mysterious, funny..."
+      ></textarea>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">
+        First Message
+      </label>
+
+      <textarea
+        id="characterGreeting"
+        class="form-textarea"
+        placeholder="What will the character say when the chat begins?"
+      ></textarea>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label class="form-label">
+        Tags
+      </label>
+
+      <input
+        id="characterTags"
+        class="form-input"
+        type="text"
+        placeholder="romance, drama, friendly"
+      >
+
+    </div>
+
+
+    <button
+      class="create-button"
+      onclick="createCharacter()"
+    >
+      Create Character
+    </button>
+
+  </div>
+
+</main>
+
+
+<!-- FAVORITES -->
+
+<main id="favoritesPage" class="page">
+
+  <div class="container">
+
+    <div class="form-title">
       Favorites
     </div>
 
-    <div class="nav-item">
-      <div class="nav-icon">◉</div>
+    <div class="form-subtitle">
+      Characters you've saved.
+    </div>
+
+    <div id="favoriteList"></div>
+
+  </div>
+
+</main>
+
+
+<!-- PROFILE -->
+
+<main id="profilePage" class="page">
+
+  <div class="container">
+
+    <div class="form-title">
       Profile
     </div>
 
-  </nav>
+    <div class="form-subtitle">
+      Your CharacterVerse account.
+    </div>
+
+    <div class="profile-box">
+
+      <div class="profile-avatar">
+        👤
+      </div>
+
+      <div class="profile-name">
+        Guest User
+      </div>
+
+      <div class="profile-text">
+        CharacterVerse member
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
 
 
-  <script>
+<!-- NAVIGATION -->
 
-    function searchCharacters() {
+<nav class="bottom-nav">
 
-      const input =
-        document.getElementById("search").value.toLowerCase();
+  <button
+    id="navDiscover"
+    class="nav-item active"
+    onclick="showPage('discover')"
+  >
+    <div class="nav-icon">⌂</div>
+    Discover
+  </button>
 
-      const characters =
-        document.querySelectorAll(".character");
 
-      characters.forEach(character => {
+  <button
+    id="navCreate"
+    class="nav-item"
+    onclick="showPage('create')"
+  >
+    <div class="nav-icon">＋</div>
+    Create
+  </button>
 
-        const text =
-          character.innerText.toLowerCase();
 
-        if (text.includes(input)) {
-          character.style.display = "block";
-        } else {
-          character.style.display = "none";
-        }
+  <button
+    id="navFavorites"
+    class="nav-item"
+    onclick="showPage('favorites')"
+  >
+    <div class="nav-icon">♡</div>
+    Favorites
+  </button>
 
-      });
 
-    }
+  <button
+    id="navProfile"
+    class="nav-item"
+    onclick="showPage('profile')"
+  >
+    <div class="nav-icon">◉</div>
+    Profile
+  </button>
 
-  </script>
+</nav>
+
+
+<script>
+
+/* DEFAULT CHARACTERS */
+
+const defaultCharacters = [
+
+  {
+    id: "alya",
+    name: "Alya",
+    creator: "@characterverse",
+    description:
+      "A mysterious girl who seems to know more about you than she should.",
+    personality:
+      "Mysterious, intelligent and observant.",
+    greeting:
+      "You finally came...",
+    tags: ["Mystery", "Romance", "Drama"],
+    avatar: "🌙"
+  },
+
+  {
+    id: "adrian",
+    name: "Adrian",
+    creator: "@characterverse",
+    description:
+      "Calm, intelligent and carrying a past he never talks about.",
+    personality:
+      "Calm, intelligent and reserved.",
+    greeting:
+      "I was wondering when you'd show up.",
+    tags: ["Male", "Drama", "Roleplay"],
+    avatar: "🖤"
+  },
+
+  {
+    id: "mira",
+    name: "Mira",
+    creator: "@newcreator",
+    description:
+      "A cheerful companion who loves late-night conversations.",
+    personality:
+      "Cheerful, caring and friendly.",
+    greeting:
+      "Hey! You're still awake?",
+    tags: ["Female", "Friendly", "Comfort"],
+    avatar: "✨"
+  }
+
+];
+
+
+/* LOAD CHARACTERS */
+
+function getCharacters() {
+
+  const saved =
+    localStorage.getItem("characterverse_characters");
+
+  if (saved) {
+    return JSON.parse(saved);
+  }
+
+  localStorage.setItem(
+    "characterverse_characters",
+    JSON.stringify(defaultCharacters)
+  );
+
+  return defaultCharacters;
+}
+
+
+/* SAVE CHARACTERS */
+
+function saveCharacters(characters) {
+
+  localStorage.setItem(
+    "characterverse_characters",
+    JSON.stringify(characters)
+  );
+
+}
+
+
+/* RENDER */
+
+function renderCharacters() {
+
+  const list =
+    document.getElementById("characterList");
+
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase();
+
+  const characters =
+    getCharacters();
+
+  const filtered =
+    characters.filter(character => {
+
+      const text =
+        (
+          character.name +
+          " " +
+          character.description +
+          " " +
+          character.tags.join(" ")
+        ).toLowerCase();
+
+      return text.includes(search);
+
+    });
+
+
+  if (filtered.length === 0) {
+
+    list.innerHTML =
+      '<div class="empty">No characters found.</div>';
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    filtered.map(character => `
+
+      <div
+        class="character"
+        onclick="openCharacter('${character.id}')"
+      >
+
+        <div class="top">
+
+          <div class="avatar">
+            ${character.avatar || "✨"}
+          </div>
+
+          <div>
+
+            <div class="name">
+              ${escapeHTML(character.name)}
+            </div>
+
+            <div class="creator">
+              ${escapeHTML(character.creator)}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="description">
+          ${escapeHTML(character.description)}
+        </div>
+
+
+        <div class="tags">
+
+          ${character.tags.map(tag => `
+            <span class="tag">
+              ${escapeHTML(tag)}
+            </span>
+          `).join("")}
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* CREATE CHARACTER */
+
+function createCharacter() {
+
+  const name =
+    document.getElementById("characterName").value.trim();
+
+  const creator =
+    document.getElementById("creatorName").value.trim();
+
+  const description =
+    document.getElementById("characterDescription").value.trim();
+
+  const personality =
+    document.getElementById("characterPersonality").value.trim();
+
+  const greeting =
+    document.getElementById("characterGreeting").value.trim();
+
+  const tagsText =
+    document.getElementById("characterTags").value.trim();
+
+
+  if (!name || !description) {
+
+    alert("Character name and description are required.");
+
+    return;
+
+  }
+
+
+  const tags =
+    tagsText
+      ? tagsText
+          .split(",")
+          .map(tag => tag.trim())
+          .filter(Boolean)
+      : ["Original"];
+
+
+  const character = {
+
+    id:
+      "character-" +
+      Date.now(),
+
+    name,
+
+    creator:
+      creator || "@guest",
+
+    description,
+
+    personality,
+
+    greeting,
+
+    tags,
+
+    avatar: "✨"
+
+  };
+
+
+  const characters =
+    getCharacters();
+
+
+  characters.unshift(character);
+
+
+  saveCharacters(characters);
+
+
+  /* RESET FORM */
+
+  document.getElementById("characterName").value = "";
+  document.getElementById("creatorName").value = "";
+  document.getElementById("characterDescription").value = "";
+  document.getElementById("characterPersonality").value = "";
+  document.getElementById("characterGreeting").value = "";
+  document.getElementById("characterTags").value = "";
+
+
+  alert(
+    "Character created successfully!"
+  );
+
+
+  showPage("discover");
+
+  renderCharacters();
+
+}
+
+
+/* CHARACTER CLICK */
+
+function openCharacter(id) {
+
+  const characters =
+    getCharacters();
+
+  const character =
+    characters.find(c => c.id === id);
+
+  if (!character) return;
+
+
+  alert(
+    character.name +
+    "\n\n" +
+    character.description +
+    "\n\nGreeting:\n" +
+    character.greeting
+  );
+
+}
+
+
+/* PAGE NAVIGATION */
+
+function showPage(page) {
+
+  const pages = {
+
+    discover:
+      document.getElementById("discoverPage"),
+
+    create:
+      document.getElementById("createPage"),
+
+    favorites:
+      document.getElementById("favoritesPage"),
+
+    profile:
+      document.getElementById("profilePage")
+
+  };
+
+
+  Object.values(pages).forEach(p => {
+
+    p.classList.remove("active");
+
+  });
+
+
+  pages[page].classList.add("active");
+
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(item => {
+
+      item.classList.remove("active");
+
+    });
+
+
+  if (page === "discover") {
+
+    document
+      .getElementById("navDiscover")
+      .classList.add("active");
+
+  }
+
+
+  if (page === "create") {
+
+    document
+      .getElementById("navCreate")
+      .classList.add("active");
+
+  }
+
+
+  if (page === "favorites") {
+
+    document
+      .getElementById("navFavorites")
+      .classList.add("active");
+
+    renderFavorites();
+
+  }
+
+
+  if (page === "profile") {
+
+    document
+      .getElementById("navProfile")
+      .classList.add("active");
+
+  }
+
+
+  window.scrollTo(0, 0);
+
+}
+
+
+/* FAVORITES */
+
+function renderFavorites() {
+
+  const list =
+    document.getElementById("favoriteList");
+
+  list.innerHTML =
+    '<div class="empty">No favorite characters yet.</div>';
+
+}
+
+
+/* HTML SECURITY */
+
+function escapeHTML(text) {
+
+  return String(text)
+
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* INITIAL LOAD */
+
+renderCharacters();
+
+</script>
 
 </body>
 </html>
