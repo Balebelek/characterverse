@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>CharacterVerse</title>
 
   <style>
@@ -13,76 +14,170 @@
     }
 
     body {
-      background: #0f1117;
-      color: white;
+      background: #0b0d12;
+      color: #f5f5f7;
       font-family: Arial, sans-serif;
       min-height: 100vh;
     }
 
     header {
-      padding: 20px;
-      border-bottom: 1px solid #252936;
+      padding: 22px 18px 14px;
+      border-bottom: 1px solid #20232c;
+      position: sticky;
+      top: 0;
+      background: #0b0d12;
+      z-index: 10;
     }
 
-    h1 {
+    .logo {
       font-size: 24px;
+      font-weight: 700;
     }
 
     .subtitle {
-      color: #8b92a5;
-      margin-top: 6px;
-      font-size: 14px;
+      color: #858b9b;
+      font-size: 13px;
+      margin-top: 5px;
     }
 
     .container {
-      padding: 20px;
+      padding: 18px;
+      max-width: 700px;
+      margin: auto;
     }
 
     .search {
       width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #2b3040;
-      background: #191c25;
+      padding: 15px 16px;
+      border-radius: 13px;
+      border: 1px solid #292d38;
+      background: #151820;
       color: white;
       outline: none;
-      margin-bottom: 20px;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .search:focus {
+      border-color: #596273;
+    }
+
+    .section {
+      margin-bottom: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 13px;
     }
 
     .section-title {
       font-size: 18px;
-      margin-bottom: 14px;
+      font-weight: 700;
     }
 
-    .card {
-      background: #191c25;
-      border: 1px solid #292e3c;
-      border-radius: 16px;
+    .see-all {
+      color: #8f96a8;
+      font-size: 13px;
+    }
+
+    .character {
+      background: #151820;
+      border: 1px solid #242833;
+      border-radius: 17px;
       padding: 16px;
       margin-bottom: 12px;
+      cursor: pointer;
+      transition: 0.2s;
     }
 
-    .character-name {
-      font-size: 17px;
-      font-weight: bold;
+    .character:hover {
+      border-color: #414858;
+      transform: translateY(-1px);
     }
 
-    .character-desc {
-      color: #9aa1b2;
-      font-size: 14px;
-      margin-top: 6px;
-      line-height: 1.4;
+    .top {
+      display: flex;
+      gap: 13px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 55px;
+      height: 55px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #303746, #171a22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+      flex-shrink: 0;
+    }
+
+    .name {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .creator {
+      color: #777e90;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .description {
+      color: #a2a8b7;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    .tags {
+      margin-top: 11px;
     }
 
     .tag {
       display: inline-block;
-      background: #272c3a;
-      color: #b8c0d4;
-      padding: 5px 9px;
-      border-radius: 8px;
-      font-size: 12px;
-      margin-top: 10px;
+      background: #202530;
+      color: #9da5b6;
+      padding: 5px 8px;
+      border-radius: 7px;
+      font-size: 11px;
       margin-right: 5px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: #101219;
+      border-top: 1px solid #242833;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .nav-item {
+      color: #777e8f;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .nav-item.active {
+      color: white;
+    }
+
+    .nav-icon {
+      font-size: 19px;
+      margin-bottom: 3px;
+    }
+
+    .spacer {
+      height: 75px;
     }
   </style>
 </head>
@@ -90,43 +185,158 @@
 <body>
 
   <header>
-    <h1>CharacterVerse</h1>
-    <div class="subtitle">AI Character Platform</div>
+    <div class="logo">CharacterVerse</div>
+    <div class="subtitle">Your world. Your characters.</div>
   </header>
 
-  <div class="container">
+  <main class="container">
 
     <input
       class="search"
       type="text"
       placeholder="Search characters..."
+      onkeyup="searchCharacters()"
+      id="search"
     >
 
-    <div class="section-title">
-      Discover Characters
-    </div>
+    <section class="section">
 
-    <div class="card">
-      <div class="character-name">Alya</div>
-      <div class="character-desc">
-        A mysterious girl who seems to know more about you than she should.
+      <div class="section-header">
+        <div class="section-title">Trending</div>
+        <div class="see-all">See all</div>
       </div>
-      <span class="tag">Female</span>
-      <span class="tag">Mystery</span>
-      <span class="tag">Romance</span>
-    </div>
 
-    <div class="card">
-      <div class="character-name">Adrian</div>
-      <div class="character-desc">
-        A calm and intelligent character with a complicated past.
+      <div class="character">
+        <div class="top">
+          <div class="avatar">🌙</div>
+
+          <div>
+            <div class="name">Alya</div>
+            <div class="creator">@characterverse</div>
+          </div>
+        </div>
+
+        <div class="description">
+          A mysterious girl who seems to know more about you than she should.
+        </div>
+
+        <div class="tags">
+          <span class="tag">Mystery</span>
+          <span class="tag">Romance</span>
+          <span class="tag">Drama</span>
+        </div>
       </div>
-      <span class="tag">Male</span>
-      <span class="tag">Drama</span>
-      <span class="tag">Roleplay</span>
+
+      <div class="character">
+        <div class="top">
+          <div class="avatar">🖤</div>
+
+          <div>
+            <div class="name">Adrian</div>
+            <div class="creator">@characterverse</div>
+          </div>
+        </div>
+
+        <div class="description">
+          Calm, intelligent and carrying a past he never talks about.
+        </div>
+
+        <div class="tags">
+          <span class="tag">Male</span>
+          <span class="tag">Drama</span>
+          <span class="tag">Roleplay</span>
+        </div>
+      </div>
+
+    </section>
+
+
+    <section class="section">
+
+      <div class="section-header">
+        <div class="section-title">New Characters</div>
+        <div class="see-all">See all</div>
+      </div>
+
+      <div class="character">
+        <div class="top">
+          <div class="avatar">✨</div>
+
+          <div>
+            <div class="name">Mira</div>
+            <div class="creator">@newcreator</div>
+          </div>
+        </div>
+
+        <div class="description">
+          A cheerful companion who loves late-night conversations.
+        </div>
+
+        <div class="tags">
+          <span class="tag">Female</span>
+          <span class="tag">Friendly</span>
+          <span class="tag">Comfort</span>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="spacer"></div>
+
+  </main>
+
+
+  <nav class="bottom-nav">
+
+    <div class="nav-item active">
+      <div class="nav-icon">⌂</div>
+      Discover
     </div>
 
-  </div>
+    <div class="nav-item">
+      <div class="nav-icon">＋</div>
+      Create
+    </div>
+
+    <div class="nav-item">
+      <div class="nav-icon">♡</div>
+      Favorites
+    </div>
+
+    <div class="nav-item">
+      <div class="nav-icon">◉</div>
+      Profile
+    </div>
+
+  </nav>
+
+
+  <script>
+
+    function searchCharacters() {
+
+      const input =
+        document.getElementById("search").value.toLowerCase();
+
+      const characters =
+        document.querySelectorAll(".character");
+
+      characters.forEach(character => {
+
+        const text =
+          character.innerText.toLowerCase();
+
+        if (text.includes(input)) {
+          character.style.display = "block";
+        } else {
+          character.style.display = "none";
+        }
+
+      });
+
+    }
+
+  </script>
 
 </body>
 </html>
