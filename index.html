@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CharacterVerse</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0f1117;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 20px;
+      border-bottom: 1px solid #252936;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .subtitle {
+      color: #8b92a5;
+      margin-top: 6px;
+      font-size: 14px;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .search {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #2b3040;
+      background: #191c25;
+      color: white;
+      outline: none;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: #191c25;
+      border: 1px solid #292e3c;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .character-name {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .character-desc {
+      color: #9aa1b2;
+      font-size: 14px;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #272c3a;
+      color: #b8c0d4;
+      padding: 5px 9px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-top: 10px;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>CharacterVerse</h1>
+    <div class="subtitle">AI Character Platform</div>
+  </header>
+
+  <div class="container">
+
+    <input
+      class="search"
+      type="text"
+      placeholder="Search characters..."
+    >
+
+    <div class="section-title">
+      Discover Characters
+    </div>
+
+    <div class="card">
+      <div class="character-name">Alya</div>
+      <div class="character-desc">
+        A mysterious girl who seems to know more about you than she should.
+      </div>
+      <span class="tag">Female</span>
+      <span class="tag">Mystery</span>
+      <span class="tag">Romance</span>
+    </div>
+
+    <div class="card">
+      <div class="character-name">Adrian</div>
+      <div class="character-desc">
+        A calm and intelligent character with a complicated past.
+      </div>
+      <span class="tag">Male</span>
+      <span class="tag">Drama</span>
+      <span class="tag">Roleplay</span>
+    </div>
+
+  </div>
+
+</body>
+</html>
